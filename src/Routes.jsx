@@ -1,6 +1,6 @@
 import {createBrowserRouter} from "react-router-dom"
 import Register from "./Components/Register"
-import Login from "./Components/Login"
+import Login from "./Components/Login1"
 
  export let routes=createBrowserRouter([
     {
