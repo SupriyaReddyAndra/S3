@@ -11,7 +11,7 @@ const initialState = {
  export let registerUserThunk=createAsyncThunk("registerUser",async(payload)=>{
   // console.log(payload);
   
-    let {data}=await axios.post("https://192.168.0.197.5000/api/users/register",payload)
+    let {data}=await axios.post("https://192.168.0.168.5000/api/users/register",payload)
     console.log(data);
     
     return data
