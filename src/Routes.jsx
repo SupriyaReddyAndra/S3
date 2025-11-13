@@ -1,9 +1,15 @@
+<<<<<<< HEAD
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Home from "./components/Home";
+=======
+import {createBrowserRouter} from "react-router-dom"
+import Register from "./Components/Register"
+import Login from "./Components/Login1"
+>>>>>>> 47fc93944f02d30a00c49bdc4e54a2dddfadd508
 
 const AppRoutes = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
