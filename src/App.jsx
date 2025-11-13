@@ -1,13 +1,13 @@
-import React from 'react'
-import Register from './Components/Register'
-import { routes } from './Routes'
-import { RouterProvider } from 'react-router-dom'
-const App = () => {
+import React from "react";
+import AppRoutes from "./Routes";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+export default function App() {
   return (
     <>
-    <RouterProvider router={routes}></RouterProvider>
+      <AppRoutes />
+      <ToastContainer position="top-right" autoClose={3000} />
     </>
-  )
+  );
 }
-
-export default App
