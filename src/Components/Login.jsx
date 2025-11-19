@@ -1,68 +1,101 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../features/authSlice";
-import { toast } from "react-toastify";
+import React, { useState } from "react";
 
-export default function Login() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { isAuthenticated, isLoading, error } = useSelector(s => s.auth);
+export default function LoginPage() {
+  const [formData, setFormData] = useState({
+    identifier: "",
+    password: "",
+  });
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState("");
 
-  useEffect(() => { if (error) toast.error(error); }, [error]);
-  useEffect(() => { if (isAuthenticated) { toast.success("Login successful"); navigate("/home"); } }, [isAuthenticated, navigate]);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setErrors("");
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!email || !password) { toast.error("All fields are required."); return; }
-    const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRx.test(email)) { toast.error("Enter a valid email address."); return; }
-    dispatch(loginUser({ email, password }));
+
+    if (!formData.identifier || !formData.password) {
+      setErrors("Please fill all fields");
+      return;
+    }
+
+    alert("Login Successful (Demo)");
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-navy px-6">
-      <div className="max-w-3xl w-full flex justify-center">
-        <div className="bg-white rounded-lg drop-shadow-lg w-full max-w-md py-10 px-8" style={{ borderRadius: "10px" }}>
-          <h2 className="text-xl font-semibold text-navy
-           mb-8 text-center">Login Form</h2>
+    <div className="w-full min-h-screen flex flex-col items-center justify-center  bg-gradient-to-r from-pink-500 via-purple-500 via-yellow-500 via-blue-500 to-red-500">
+      {/* Login Box */}
+      <div className="w-full max-w-sm bg-white border border-gray-300 p-8 rounded-lg shadow-sm mb-3">
+        {/* Instagram Logo */}
+        <h1 className="text-center text-4xl font-serif mb-7">Instagram</h1>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                type="email"
-                className="w-full bg-transparent border-b border-navy-300 focus:outline-none py-2 px-1 text-sm"
-              />
-            </div>
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-3">
+          <input
+            type="text"
+            name="identifier"
+            placeholder="Phone number, username, or email"
+            value={formData.identifier}
+            onChange={handleChange}
+            className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-1 focus:ring-blue-400 focus:outline-none"
+          />
 
-            <div>
-              <input
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
-                type="password"
-                className="w-full bg-transparent border-b border-navy-300 focus:outline-none py-2 px-1 text-sm"
-              />
-            </div>
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-1 focus:ring-blue-400 focus:outline-none"
+          />
 
-            <div>
-              <button type="submit" disabled={isLoading} className="w-full bg-navy text-navy py-2 rounded-sm">
-                {isLoading ? "Logging in..." : "Login"}
-              </button>
-            </div>
-          </form>
+          {errors && (
+            <p className="text-red-500 text-sm text-center">{errors}</p>
+          )}
 
-          <div className="mt-4 text-xs text-center text-gray-500">
-            <div>Forgot <span className="text-navy font-medium">Password?</span></div>
-            <div className="mt-2">Don’t have an account? <Link to="/register" className="text-blue-700 font-medium">Register</Link></div>
-          </div>
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-2 rounded-md font-semibold hover:bg-blue-600"
+          >
+            Log in
+          </button>
+        </form>
+
+        {/* OR Line */}
+        <div className="flex items-center my-4">
+          <div className="flex-grow h-px bg-gray-300"></div>
+          <span className="px-2 text-gray-500 text-sm font-semibold">OR</span>
+          <div className="flex-grow h-px bg-gray-300"></div>
         </div>
+
+        {/* Facebook Login */}
+        <div className="flex justify-center items-center gap-2 cursor-pointer">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
+            alt="fb"
+            className="w-5"
+          />
+          <p className="text-blue-700 font-semibold text-sm">
+            Log in with Facebook
+          </p>
+        </div>
+
+        {/* Forgot Password */}
+        <p className="text-center text-blue-700 text-sm mt-3 cursor-pointer">
+          Forgot password?
+        </p>
+      </div>
+
+      {/* Sign Up Box BELOW LOGIN BOX */}
+      <div className="w-full max-w-sm bg-white border border-gray-300 py-4 rounded-lg shadow-sm text-center">
+        <p className="text-sm">
+          Don't have an account?{" "}
+          <span className="text-blue-600 font-semibold cursor-pointer">
+            Sign up
+          </span>
+        </p>
       </div>
     </div>
   );
